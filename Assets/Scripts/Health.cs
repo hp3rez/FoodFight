@@ -5,14 +5,21 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
+    [Header("Health")]
     [SerializeField] private Image healthBar; 
     public float maxHealth = 0.3f;
     public float currentHealth;
+
+    [Header("IFrames")]
+    [SerializeField] private float iFrameDuration;
+    [SerializeField] private int numFlashes;
+    private SpriteRenderer sprite;
 
     void Start()
     {
         currentHealth = 0.3f;
         UpdateHealthUI(); 
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     void UpdateHealthUI()
@@ -31,6 +38,7 @@ public class Health : MonoBehaviour
             }
 
             UpdateHealthUI();
+            StartCoroutine(Invulnerability());
         }
     }
 
@@ -44,5 +52,18 @@ public class Health : MonoBehaviour
             }
             UpdateHealthUI();
         }
+    }
+
+    private IEnumerator Invulnerability() {
+        Physics2D.IgnoreLayerCollision(10, 11, true);
+
+        for (int i = 0; i < numFlashes; i++) {
+            sprite.color = new Color(1, 0, 0, 0.5f);
+            yield return new WaitForSeconds(iFrameDuration / (numFlashes * 2));
+            sprite.color = Color.white;
+            yield return new WaitForSeconds(iFrameDuration / (numFlashes) * 2);
+        }
+
+        Physics2D.IgnoreLayerCollision(10, 11, false);
     }
 }
