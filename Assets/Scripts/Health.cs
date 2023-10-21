@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Health : MonoBehaviour
@@ -9,6 +10,7 @@ public class Health : MonoBehaviour
     [SerializeField] private Image healthBar; 
     public float maxHealth = 0.3f;
     public float currentHealth;
+    private int hitCount;
 
     [Header("IFrames")]
     [SerializeField] private float iFrameDuration;
@@ -18,6 +20,7 @@ public class Health : MonoBehaviour
     void Start()
     {
         currentHealth = 0.3f;
+        hitCount = 0;
         UpdateHealthUI(); 
         sprite = GetComponent<SpriteRenderer>();
     }
@@ -29,17 +32,28 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
+        hitCount += 1;
+
         if (currentHealth > 0)
         {
             currentHealth -= damageAmount;
 
             if(currentHealth < 0) {
                 currentHealth = 0;
+                
             }
 
             UpdateHealthUI();
-            StartCoroutine(Invulnerability());
+
+            
         }
+        
+        if(hitCount >= 3) {
+            SceneManager.LoadSceneAsync(2);
+        }
+
+        StartCoroutine(Invulnerability());
+
     }
 
     public void Heal(float healAmount)
