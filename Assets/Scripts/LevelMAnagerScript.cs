@@ -18,9 +18,9 @@ public class LevelMAnagerScript : MonoBehaviour
     [SerializeField] private GameObject heart;
 
     private void Start() {
-        sawTimer = 4;
-        spikeTimer = 6;
-        heartTimer = 20;
+        sawTimer = Random.Range(4, 9);
+        spikeTimer = Random.Range(2, 7);
+        heartTimer = Random.Range(15, 21);
 
         sawCountdown  = 0;
         spikeCountdown = 0;
@@ -33,7 +33,7 @@ public class LevelMAnagerScript : MonoBehaviour
         if(sawCountdown >= sawTimer) {
             getSaw();
             sawCountdown = 0;
-            sawTimer = Random.Range(3, 7);
+            sawTimer = Random.Range(4, 9);
         } else {
             sawCountdown += Time.deltaTime;
         }
@@ -41,7 +41,7 @@ public class LevelMAnagerScript : MonoBehaviour
         if(spikeCountdown >= spikeTimer) {
             getSpike();
             spikeCountdown = 0;
-            spikeTimer = Random.Range(3, 7);
+            spikeTimer = Random.Range(2, 7);
         } else {
             spikeCountdown += Time.deltaTime;
         } 
@@ -49,7 +49,7 @@ public class LevelMAnagerScript : MonoBehaviour
         if(heartCountdown >= heartTimer) {
             getHeart();
             heartCountdown = 0;
-            heartTimer = Random.Range(15, 20);
+            heartTimer = Random.Range(15, 21);
         } else {
             heartCountdown += Time.deltaTime;
         }

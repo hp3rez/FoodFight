@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class EnemiesDamage : MonoBehaviour
 {
     [SerializeField] private float damage;
     [SerializeField] private float speed;
+    private ScoreScript s;
+
+    private void Awake() {
+        s = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<ScoreScript>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if(collision.tag == "Player") {
@@ -19,6 +26,7 @@ public class EnemiesDamage : MonoBehaviour
 
         if(transform.position.x <= -1.75) {
             Destroy(gameObject);
+            s.addScore(1);
         }
     }
 }
