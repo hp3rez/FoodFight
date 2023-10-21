@@ -7,9 +7,9 @@ using UnityEngine;
 
 public class LevelMAnagerScript : MonoBehaviour
 {
-    [SerializeField] private float sawTimer;
-    [SerializeField] private float spikeTimer;
-    [SerializeField] private float heartTimer;
+    private float sawTimer;
+    private float spikeTimer;
+    private float heartTimer;
     private float sawCountdown;
     private float spikeCountdown;
     private float heartCountdown;
@@ -17,51 +17,53 @@ public class LevelMAnagerScript : MonoBehaviour
     [SerializeField] private GameObject spike;
     [SerializeField] private GameObject heart;
 
-    private void Awake() {
-    }
-
     private void Start() {
-        sawTimer *= 100;
-        spikeTimer *= 100;
-        heartTimer *= 100;
+        sawTimer = 4;
+        spikeTimer = 6;
+        heartTimer = 20;
 
-        sawCountdown  = sawTimer;
-        spikeCountdown = spikeTimer;
-        heartCountdown = heartTimer;
+        sawCountdown  = 0;
+        spikeCountdown = 0;
+        heartCountdown = 0;
+
+        getSaw();
     }
 
     private void Update() {
         if(sawCountdown >= sawTimer) {
             getSaw();
             sawCountdown = 0;
+            sawTimer = Random.Range(3, 7);
         } else {
-            sawCountdown += 1;
+            sawCountdown += Time.deltaTime;
         }
 
         if(spikeCountdown >= spikeTimer) {
             getSpike();
             spikeCountdown = 0;
+            spikeTimer = Random.Range(3, 7);
         } else {
-            spikeCountdown += 1;
+            spikeCountdown += Time.deltaTime;
         } 
 
         if(heartCountdown >= heartTimer) {
             getHeart();
             heartCountdown = 0;
+            heartTimer = Random.Range(15, 20);
         } else {
-            heartCountdown += 1;
+            heartCountdown += Time.deltaTime;
         }
     }
 
     private void getSaw() {
-        Instantiate(saw);
+        Instantiate(saw, new Vector3(1.95f, -0.115f, 0), transform.rotation);
     }
 
     private void getSpike() {
-        Instantiate(spike);
+        Instantiate(spike, new Vector3(1.95f, 0.153f, 0), transform.rotation);
     }
 
     private void getHeart() {
-        Instantiate(heart);
+        Instantiate(heart, new Vector3(1.95f, 0.067f, 0), transform.rotation);
     }
 }

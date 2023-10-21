@@ -31,6 +31,12 @@ public class EnemiesSideways : MonoBehaviour
                 movingLeft = true;
             }
         }
+
+        transform.position = transform.position + (Vector3.left * speed) * Time.deltaTime;
+
+        if(transform.position.x <= -1.75) {
+            Destroy(gameObject);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision) {
